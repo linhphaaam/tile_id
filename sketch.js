@@ -69,9 +69,10 @@ function getAverageRGB(c, x, y, stepSize) {
 }
 
 function setup() {
-  createCanvas(1024, 800);
-  capture = createCapture(VIDEO);
-  capture.size(680, 480);
+  img.resize(300, 0);
+  createCanvas(img.width+200, img.height+200);
+  // capture = createCapture(VIDEO);
+  // capture.size(680, 480);
   // capture.hide();
   // imageMode(CENTER);
 
@@ -142,22 +143,20 @@ function setup() {
 function draw() {
   background(0);
   // image(capture, 0, 0, 680, 480);
-  image(img, 0, 0, img.width, img.height);
-  const stepSize = 15;
+  // img.resize(512, 0);
+  image(img, 100, 100, img.width, img.height);
+  const stepSize = 10;
   const c = get();
   c.loadPixels();
   let delta_list = [];
-  for (var x = 0; x < img.width; x += stepSize) {
-    for (var y = 0; y < img.height; y += stepSize) {
+  for (var x = 150; x < img.width+50; x += stepSize) {
+    for (var y = 100; y < img.height+50; y += stepSize) {
       var pixel_color = getAverageRGB(c, x, y, stepSize);
       for (let i = 0; i < 30; i++) {
         delta_list.push(compareColor(pixel_color, all_tiles_rgb[i]));
       }
       // console.log(delta_list);
       var tile_index = mostSimilarTileIndex(delta_list);
-      console.log(tile_index);
-      console.log(x);
-      console.log(y);
       image(all_tiles[tile_index], x, y, stepSize, stepSize); 
       delta_list = [];
       fill(0, 0, 0); 
