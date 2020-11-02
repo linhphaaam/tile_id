@@ -1,0 +1,43 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: gold;
+  display: inline;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#p5-canvas {
+  display: inline;
+}
+
+#id-card {
+  display: inline;
+  position: absolute;
+  width: 50%;
+  left: 520px;
+  
+}
+
+h1, h3, p {
+  color: black;
+  display: inline-block;
+}
+
+.tile-gallery {
+  overflow: scroll;
+  height: 350px;
+  width: 90%;
+}
+
+.tile-id {
+  display: inline-block;
+  background-color: cornsilk;
+  width: 200px;
+  height: 300px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+canvas {
+  display: inline;
+}
