@@ -102,16 +102,9 @@ function find_face_box() {
 }
 
 function setup() {
-<<<<<<< HEAD:static_sketch.js
-  img.resize(300, 0);
-  createCanvas(img.width+200, img.height+200);
-  // capture = createCapture(VIDEO);
-  // capture.size(680, 480);
-=======
   createCanvas(w, h).parent('canvasHolder');;
   capture = createCapture(VIDEO);
   capture.size(w, h);
->>>>>>> main:static/sketch.js
   // capture.hide();
   // imageMode(CENTER);
 
@@ -159,15 +152,8 @@ function setup() {
 
 function draw() {
   background(0);
-<<<<<<< HEAD:static_sketch.js
-  // image(capture, 0, 0, 680, 480);
-  // img.resize(512, 0);
-  image(img, 100, 100, img.width, img.height);
-  const stepSize = 10;
-=======
   image(capture, 0, 0, w, h);
   //image(img, 0, 0, img.width, img.height);
->>>>>>> main:static/sketch.js
   const c = get();
   c.loadPixels();
 
@@ -176,25 +162,17 @@ function draw() {
   const stepSize = Math.floor(box_height / 25);
 
   let delta_list = [];
-<<<<<<< HEAD:static_sketch.js
-  for (var x = 150; x < img.width+50; x += stepSize) {
-    for (var y = 100; y < img.height+50; y += stepSize) {
-=======
   for (var x = Math.floor(corners[0]); x < Math.floor(corners[1]); x += stepSize) {
     for (var y = Math.floor(corners[2]); y < Math.floor(corners[3]); y += stepSize) {
->>>>>>> main:static/sketch.js
       var pixel_color = getAverageRGB(c, x, y, stepSize);
       for (let i = 0; i < 30; i++) {
         delta_list.push(compareColor(pixel_color, all_tiles_rgb[i]));
       }
       // console.log(delta_list);
       var tile_index = mostSimilarTileIndex(delta_list);
-<<<<<<< HEAD:static_sketch.js
-=======
       //console.log(tile_index);
       console.log(x);
       //console.log(y);
->>>>>>> main:static/sketch.js
       image(all_tiles[tile_index], x, y, stepSize, stepSize); 
       delta_list = [];
       fill(0, 0, 0); 
