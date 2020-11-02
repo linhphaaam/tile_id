@@ -4,6 +4,8 @@ let all_tiles = [];
 let all_tiles_rgb = [];
 var face_pos;
 var face_border = 60;
+var w = 1024;
+var h = 756;
 
 function preload() {
 
@@ -100,9 +102,9 @@ function find_face_box() {
 }
 
 function setup() {
-  createCanvas(1024, 800);
+  createCanvas(w, h).parent('canvasHolder');;
   capture = createCapture(VIDEO);
-  capture.size(680, 480);
+  capture.size(w, h);
   // capture.hide();
   // imageMode(CENTER);
 
@@ -150,7 +152,7 @@ function setup() {
 
 function draw() {
   background(0);
-  image(capture, 0, 0, 680, 480);
+  image(capture, 0, 0, w, h);
   //image(img, 0, 0, img.width, img.height);
   const c = get();
   c.loadPixels();
