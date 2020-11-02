@@ -2,10 +2,7 @@ let img;
 
 let all_tiles = [];
 let all_tiles_rgb = [];
-var face_pos;
-var face_border = 60;
-var w = 1024;
-var h = 756;
+
 
 function preload() {
 
@@ -71,47 +68,13 @@ function getAverageRGB(c, x, y, stepSize) {
   }
 }
 
-function find_face_box() {
-  
-  // get array of face marker positions [x, y] format
-  face_pos = ctracker.getCurrentPosition();
-  
-  // Initialize larger bounding box
-  var max_y=-9999;
-  var min_y=9999;
-  var max_x=-9999;
-  var min_x=9999;
-  for (var i=0; i<face_pos.length; i++) {
-    
-    if(face_pos[i][0] > max_x){
-      max_x = face_pos[i][0]
-    }
-    if(face_pos[i][0] < min_x){
-      min_x = face_pos[i][0]
-    }
-    if(face_pos[i][1] > max_y){
-      max_y = face_pos[i][1]
-    }
-    if(face_pos[i][1] < min_y){
-      min_y = face_pos[i][1]
-    }
-  }
-  var corners = [min_x - face_border, max_x + face_border, min_y - 2.5 * face_border, max_y + 1.5 * face_border];
-  return corners;
-  
-}
-
 function setup() {
-  createCanvas(w, h).parent('canvasHolder');;
-  capture = createCapture(VIDEO);
-  capture.size(w, h);
+  img.resize(300, 0);
+  createCanvas(img.width+200, img.height+200);
+  // capture = createCapture(VIDEO);
+  // capture.size(680, 480);
   // capture.hide();
   // imageMode(CENTER);
-
-  // Set up Tracker
-  ctracker = new clm.tracker();
-  ctracker.init(pModel);
-  ctracker.start(capture.elt);  
 
   // hard code rgb values
   all_tiles_rgb[0] = [69, 79, 95];
@@ -146,42 +109,61 @@ function setup() {
   all_tiles_rgb[29] = [165, 130, 74];
   all_tiles_rgb[30] = [173, 153, 91];
 
-  frameRate(30);
+  frameRate(2);
+
+  // background(0);
+  // image(img, 0, 0, 541, 675);
+  // const stepSize = 20;
+  // const c = get();
+  // c.loadPixels();
+  // let delta_list = [];
+  // for (var x = 0; x < 541; x += stepSize) {
+  //   for (var y = 0; y < 675; y += stepSize) {
+  //     var pixel_color = getAverageRGB(c, x, y, stepSize);
+  //     for (let i = 0; i < 30; i++) {
+  //       delta_list.push(compareColor(pixel_color, all_tiles_rgb[i]));
+  //     }
+  //     // console.log(delta_list);
+  //     var tile_index = mostSimilarTileIndex(delta_list);
+  //     console.log(tile_index);
+  //     console.log(x);
+  //     console.log(y);
+  //     image(all_tiles[tile_index], x, y, stepSize, stepSize); 
+  //     delta_list = [];
+  //     fill(0, 0, 0); 
+  //     strokeWeight(1);
+  //     line(0, y, width, y);
+  //     line(x, 0, x, height);
+  //   }
+  // }
+  
 }
 
 
 function draw() {
   background(0);
-  image(capture, 0, 0, w, h);
-  //image(img, 0, 0, img.width, img.height);
+  // image(capture, 0, 0, 680, 480);
+  // img.resize(512, 0);
+  image(img, 100, 100, img.width, img.height);
+  const stepSize = 10;
   const c = get();
   c.loadPixels();
-
-  var corners = find_face_box();
-  var box_height = corners[3] - corners[2]
-  const stepSize = Math.floor(box_height / 25);
-
   let delta_list = [];
-  for (var x = Math.floor(corners[0]); x < Math.floor(corners[1]); x += stepSize) {
-    for (var y = Math.floor(corners[2]); y < Math.floor(corners[3]); y += stepSize) {
+  for (var x = 150; x < img.width+50; x += stepSize) {
+    for (var y = 100; y < img.height+50; y += stepSize) {
       var pixel_color = getAverageRGB(c, x, y, stepSize);
       for (let i = 0; i < 30; i++) {
         delta_list.push(compareColor(pixel_color, all_tiles_rgb[i]));
       }
       // console.log(delta_list);
       var tile_index = mostSimilarTileIndex(delta_list);
-      //console.log(tile_index);
-      console.log(x);
-      //console.log(y);
       image(all_tiles[tile_index], x, y, stepSize, stepSize); 
       delta_list = [];
       fill(0, 0, 0); 
       strokeWeight(1);
-      line(Math.floor(corners[0]), y, Math.floor(corners[1]), y);
-      line(x, Math.floor(corners[2]), x, Math.floor(corners[3]));
+      line(0, y, width, y);
+      line(x, 0, x, height);
     }
   }
-
-  
 
 }
