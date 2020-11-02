@@ -71,35 +71,6 @@ function getAverageRGB(c, x, y, stepSize) {
   }
 }
 
-function find_face_box() {
-  
-  // get array of face marker positions [x, y] format
-  face_pos = ctracker.getCurrentPosition();
-  
-  // Initialize larger bounding box
-  var max_y=-9999;
-  var min_y=9999;
-  var max_x=-9999;
-  var min_x=9999;
-  for (var i=0; i<face_pos.length; i++) {
-    
-    if(face_pos[i][0] > max_x){
-      max_x = face_pos[i][0]
-    }
-    if(face_pos[i][0] < min_x){
-      min_x = face_pos[i][0]
-    }
-    if(face_pos[i][1] > max_y){
-      max_y = face_pos[i][1]
-    }
-    if(face_pos[i][1] < min_y){
-      min_y = face_pos[i][1]
-    }
-  }
-  var corners = [min_x - face_border, max_x + face_border, min_y - 2.5 * face_border, max_y + 1.5 * face_border];
-  return corners;
-  
-}
 
 function setup() {
   img.resize(300, 0);
@@ -109,10 +80,6 @@ function setup() {
   // capture.hide();
   // imageMode(CENTER);
 
-  // Set up Tracker
-  ctracker = new clm.tracker();
-  ctracker.init(pModel);
-  ctracker.start(capture.elt);  
 
   // hard code rgb values
   all_tiles_rgb[0] = [69, 79, 95];
@@ -160,9 +127,6 @@ function draw() {
   const c = get();
   c.loadPixels();
 
-  var corners = find_face_box();
-  var box_height = corners[3] - corners[2]
-  const stepSize = Math.floor(box_height / 25);
 
   let delta_list = [];
   for (var x = 150; x < img.width+50; x += stepSize) {
@@ -177,8 +141,8 @@ function draw() {
       delta_list = [];
       fill(0, 0, 0); 
       strokeWeight(1);
-      line(Math.floor(corners[0]), y, Math.floor(corners[1]), y);
-      line(x, Math.floor(corners[2]), x, Math.floor(corners[3]));
+      line(150, y, img.width+50, y);
+      line(x, 100, x, img.height+50);
     }
   }
 
