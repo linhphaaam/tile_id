@@ -105,7 +105,7 @@ function setup() {
   createCanvas(w, h).parent('canvasHolder');;
   capture = createCapture(VIDEO);
   capture.size(w, h);
-  // capture.hide();
+  capture.hide();
   // imageMode(CENTER);
 
   // Set up Tracker
